@@ -6,6 +6,9 @@
 		"dev": "nodemon ./bin/www",
 		"start": "node app.js"
 	},
+	"engines": {
+		"node": "14.9"
+	},
 	"proxy": "http://localhost:3000",
 	"dependencies": {
 		"bcryptjs": "^2.4.3",
