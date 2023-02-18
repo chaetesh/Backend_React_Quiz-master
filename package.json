@@ -6,7 +6,6 @@
 		"dev": "nodemon ./bin/www",
 		"start": "node ./bin/www"
 	},
-	"proxy": "http://localhost:3000",
 	"dependencies": {
 		"bcryptjs": "^2.4.3",
 		"cookie-parser": "~1.4.4",
