@@ -3,9 +3,11 @@
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
-		"start": "node app.js"
+		"dev": "nodemon ./bin/www",
+		"start": "node ./bin/www"
 	},
-	"dependencies": {	
+	"proxy": "http://localhost:3000",
+	"dependencies": {
 		"bcryptjs": "^2.4.3",
 		"cookie-parser": "~1.4.4",
 		"cors": "^2.8.5",
