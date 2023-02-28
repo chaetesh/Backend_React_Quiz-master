@@ -1,10 +1,22 @@
 var Quiz = require("../models/quiz");
 var Question = require("../models/question");
 var Attempt = require("../models/attempt");
+var User = require("../models/user");
 
 var { isValidQuestion } = require("../util/validatorModule");
 
 module.exports = {
+	winnerQuiz: async (req,res,next)=>{
+		var winner = await Attempt.find({totalScore:2});
+		const winnergPay = [];
+
+		for(const player of winner){
+			var userPlayer = await User.findById(player.playerId);
+			winnergPay.push(userPlayer.gPay);
+		}
+		console.log("winner: ",winnergPay);
+		return res.status(200).json(winnergPay);
+	},
 	listQuizzes: async (req, res, next) => {
 		console.log("here")
 		try {
@@ -39,7 +51,7 @@ module.exports = {
 			var newQuiz = new Quiz({ title, authorId: req.userId });
 
 			var validQuestions = [];
-
+			
 			questions.forEach((question) => {
 				if (isValidQuestion(question)) {
 					question.quizId = newQuiz._id;
@@ -156,19 +168,25 @@ module.exports = {
 			// create attempt
 
 			var quiz = await Quiz.findById(quizId).populate("questions");
+			let totalMarks = 0;
 			var serializedQuestionIds = questions.map(
 				(question) => question.questionId
 			);
 
 			var attemptedQuestions = quiz.questions.map((question, i) => {
 				var index = serializedQuestionIds.indexOf(String(question._id));
+				if(hasCorrectAnswers(questions[index].answers,question.answers)){
+					totalMarks++;
+					console.log("tot: ",totalMarks);
+				}
 				return {
 					questionId: question._id,
 					answers: index == -1 ? [] : questions[index].answers,
 					isCorrect:
 						index == -1
 							? false
-							: hasCorrectAnswers(
+							:
+							 hasCorrectAnswers(
 									questions[index].answers,
 									question.answers
 							  ),
@@ -179,6 +197,7 @@ module.exports = {
 				quizId,
 				questions: attemptedQuestions,
 				playerId: req.userId,
+				totalScore: totalMarks,
 			});
 
 			res.send({ attempt });

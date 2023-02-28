@@ -13,7 +13,7 @@ const attemptSchema = new Schema(
 				// score: { type: number }
 			},
 		],
-		// totalScore: { type: number }
+		totalScore: { type: Number }
 	},
 	{ timestamps: true }
 );

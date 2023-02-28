@@ -26,5 +26,10 @@ router.post(
 	auth.validateJwt,
 	quizController.attemptQuiz
 );
+// Winner of quiz
+router.get(
+	"/:id/winner",
+	quizController.winnerQuiz
+);
 
 module.exports = router;
