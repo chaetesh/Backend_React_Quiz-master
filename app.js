@@ -11,6 +11,8 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var quizRouter = require("./routes/quiz");
 var questionsRouter = require("./routes/question");
+var paymentRouter = require("./routes/paymentRoute");
+var passwordResetRoutes = require("./routes/passwordReset");
 require("dotenv").config();
 
 //mongoDB connection
@@ -39,6 +41,8 @@ mongoose.connect(
   app.use("/api/v1/users", usersRouter);
   app.use("/api/v1/quiz", quizRouter);
   app.use("/api/v1/questions", questionsRouter);
+  app.use("/api/v1/payment", paymentRouter);
+  app.use("/api/v1/password-reset", passwordResetRoutes);
   
   // catch 404 and forward to error handler
   app.use(function (req, res, next) {

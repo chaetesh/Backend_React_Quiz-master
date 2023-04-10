@@ -7,7 +7,12 @@ var { isValidQuestion } = require("../util/validatorModule");
 
 module.exports = {
 	winnerQuiz: async (req,res,next)=>{
-		var winner = await Attempt.find({totalScore:2});
+		var ques = await Quiz.find({});
+		var attem = await Attempt.find({});
+		console.log("attempt: ",attem);
+
+		if(ques != 0){
+		var winner = await Attempt.find({totalScore:ques[0].questions.length});
 		const winnergPay = [];
 
 		for(const player of winner){
@@ -16,6 +21,7 @@ module.exports = {
 		}
 		console.log("winner: ",winnergPay);
 		return res.status(200).json(winnergPay);
+	}
 	},
 	listQuizzes: async (req, res, next) => {
 		console.log("here")
@@ -128,7 +134,7 @@ module.exports = {
 			if (!quiz) {
 				return res.status(404).send({ massage: "Quiz not found" });
 			}
-			if (req.userId !== quiz.authorId) {
+			if (req.userId.superUser === false) {
 				return res.status(403).send({
 					massage: "You are not authorized to delete the quiz",
 				});
@@ -145,6 +151,12 @@ module.exports = {
 
 			// finally delete quiz
 			await Quiz.findByIdAndDelete(quizId);
+
+			
+			var attemp = await Attempt.find({});
+			if(attemp.length != 0){
+				Attempt.collection.drop();
+			}
 
 			res.send({ massage: "Quiz deleted successfully" });
 		} catch (error) {
