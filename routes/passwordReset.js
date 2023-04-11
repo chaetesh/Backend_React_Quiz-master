@@ -30,6 +30,7 @@ router.post("/", async (req, res) => {
 		}
 
 		const url = `${process.env.FRONTEND_URL}password-reset/${user._id}/${token.token}/`;
+		console.log("url: ",url);
 		await sendEmail(user.email, "Password Reset", url);
 
 		res
