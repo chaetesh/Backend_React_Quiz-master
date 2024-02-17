@@ -4,12 +4,12 @@ var express = require("express");
 var router = express.Router();
 
 var instance = new Razorpay({
-  key_id: "rzp_test_E3tTSlZqUquTS4",
-  key_secret: "r8TMvyEZ3X2woJw88i7W0VrW",
+  key_id: "rzp_live_GAPOZyPwGHq5dl",
+  key_secret: "ls4dR7nMG2M951v9Uw7voQ7D",
 });
 
 router.get("/getkey", (req, res) =>
-res.status(200).json({ key: "rzp_test_E3tTSlZqUquTS4" })
+res.status(200).json({ key: "rzp_live_GAPOZyPwGHq5dl" })
 );
 
 router.post("/checkout", async (req, res) => {
@@ -35,7 +35,7 @@ router.post("/verify", async (req, res) => {
 const body = razorpay_order_id + "|" + razorpay_payment_id;
 
 const expectedSignature = crypto
-  .createHmac("sha256", "r8TMvyEZ3X2woJw88i7W0VrW")
+  .createHmac("sha256", "ls4dR7nMG2M951v9Uw7voQ7D")
   .update(body.toString())
   .digest("hex");
 
