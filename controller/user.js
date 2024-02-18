@@ -58,20 +58,18 @@ module.exports = {
     }
   },
   getCurrentUser: async (req, res, next) => {
-
-    try {      
+    try {
       var userId = req.userId;
-      
+
       let user = await User.findById(userId);
-      
+
       if (!user) {
         res.status(404).send({ massage: "User not found" });
       }
-  
-      res.send({  user : user}) ;
-    } catch (error) {
-        next(error); 
-    }
 
+      res.send({ user: user });
+    } catch (error) {
+      next(error);
+    }
   },
 };
