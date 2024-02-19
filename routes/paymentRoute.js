@@ -3,6 +3,7 @@ const Razorpay = require("razorpay");
 var express = require("express");
 const user = require("../models/user");
 var router = express.Router();
+require("dotenv").config();
 
 var instance = new Razorpay({
   key_id: "rzp_live_GAPOZyPwGHq5dl",
@@ -69,7 +70,7 @@ router.post("/verify", async (req, res) => {
     }
 
     res.redirect(
-      `http://localhost:3000/paymentsuccess?reference=${razorpay_payment_id}`
+      `${process.env.FRONTEND_URL}paymentsuccess/${razorpay_payment_id}`
     );
   } else {
     res.status(400).json({
