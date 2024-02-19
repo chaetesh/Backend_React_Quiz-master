@@ -70,7 +70,7 @@ router.post("/verify", async (req, res) => {
     }
 
     res.redirect(
-      `${process.env.FRONTEND_URL}paymentsuccess/${razorpay_payment_id}`
+      `https://thequrancompetition.com/paymentsuccess/${razorpay_payment_id}`
     );
   } else {
     res.status(400).json({
